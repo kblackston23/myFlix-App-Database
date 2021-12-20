@@ -4,8 +4,6 @@ const app = express();
 
 app.use(morgan("common"));
 
-app.use(express.static("public"));
-
 let topMovies = [
   {
     title: "Kiki's Delivery Service",
@@ -60,6 +58,8 @@ app.get("/documentation", (req, res) => {
 app.get("/movies", (req, res) => {
   res.json(topMovies);
 });
+
+app.use(express.static("public"));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
