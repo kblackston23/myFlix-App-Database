@@ -12,43 +12,53 @@ app.use(bodyParser.json());
 let topMovies = [
   {
     title: "Kiki's Delivery Service",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Princess Mononoke",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Ponyo",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Howl's Moving Castle",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Spirited Away",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Caslte In the Sky",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "My Neighbor Totoro",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "Nausicaa of the Valley of the Wind",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "The Wind Rises",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   },
   {
     title: "When Marnie Was There",
-    producer: "Studio Ghibli"
+    director: "Studio Ghibli",
+    genre: "Animation"
   }
 ];
 
