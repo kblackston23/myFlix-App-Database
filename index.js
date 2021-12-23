@@ -24,7 +24,7 @@ let topMovies = [
       name: "Studio Ghibli",
       location: "Japan"
     },
-    genre: "Animation"
+    genre: "Family"
   },
   {
     title: "Ponyo",
@@ -40,7 +40,7 @@ let topMovies = [
       name: "Studio Ghibli",
       location: "Japan"
     },
-    genre: "Animation"
+    genre: "Family"
   },
   {
     title: "Spirited Away",
@@ -51,12 +51,12 @@ let topMovies = [
     genre: "Animation"
   },
   {
-    title: "Caslte In the Sky",
+    title: "Castle In the Sky",
     director: {
       name: "Studio Ghibli",
       location: "Japan"
     },
-    genre: "Animation"
+    genre: "Family"
   },
   {
     title: "My Neighbor Totoro",
@@ -72,7 +72,7 @@ let topMovies = [
       name: "Studio Ghibli",
       location: "Japan"
     },
-    genre: "Animation"
+    genre: "Family"
   },
   {
     title: "The Wind Rises",
@@ -88,7 +88,7 @@ let topMovies = [
       name: "Studio Ghibli",
       location: "Japan"
     },
-    genre: "Animation"
+    genre: "Family"
   }
 ];
 
@@ -111,7 +111,7 @@ app.get("/movies", (req, res) => {
 app.get("/movies/:title", (req, res) => {
   res.status(200).json(
     topMovies.find(movie => {
-      return movie.title === rep.params.title;
+      return movie.title === req.params.title;
     })
   );
 });
