@@ -13,4 +13,66 @@
     update their personal information, and create a list of their favorite
     movies.
   </p>
+  <table>
+    <tr>
+      <th>Request</th>
+      <th>URL</th>
+      <th>HTTP Method</th>
+      <th>Response</th>
+    </tr>
+    <tr>
+      <td>Get a list of movies</td>
+      <td>/Movies</td>
+      <td>GET</td>
+      <td>Returns a JSON list of movies.</td>
+    </tr>
+    <tr>
+      <td>Get data about the movie</td>
+      <td>/movies/:title</td>
+      <td>GET</td>
+      <td>Returns a JSON data about a specific movie.</td>
+    </tr>
+    <tr>
+      <td>Return data about a genre by name/title.</td>
+      <td>/genres/:genre</td>
+      <td>GET</td>
+      <td>Returns a JSON data with movies of that ganre.</td>
+    </tr>
+    <tr>
+      <td>Get data about the director</td>
+      <td>/directors/:directorName</td>
+      <td>GET</td>
+      <td>Returns a JSON data about auther year.</td>
+    </tr>
+    <tr>
+      <td>Add new user</td>
+      <td>/users/:newUser</td>
+      <td>POST</td>
+      <td>Will add new user to JSON object.</td>
+    </tr>
+    <tr>
+      <td>Allow users to update their user information</td>
+      <td>/users/:Username</td>
+      <td>PUT</td>
+      <td>Returns the data fields that was updated by the user.</td>
+    </tr>
+    <tr>
+      <td>Delete the user</td>
+      <td>/users/:deleteUser</td>
+      <td>DELETE</td>
+      <td>Return a text confirming that the user was deleted.</td>
+    </tr>
+    <tr>
+      <td>Add new movie to list of favorite</td>
+      <td>/favorite/:movieName</td>
+      <td>POST</td>
+      <td>Returns a text confirming which movie was added successfully.</td>
+    </tr>
+    <tr>
+      <td>Delete movie from list of favorite</td>
+      <td>/favorite/:deleteMovie</td>
+      <td>DELETE</td>
+      <td>Returns a text confirming which movie was removed successfully.</td>
+    </tr>
+  </table>
 </body>
