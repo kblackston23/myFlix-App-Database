@@ -2,6 +2,16 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
+const mongoose = require("mongoose");
+const Models = require("./models.js");
+
+const myFlixDB = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 //morgan
 app.use(morgan("common"));
@@ -9,154 +19,168 @@ app.use(morgan("common"));
 //bodyParser
 app.use(bodyParser.json());
 
-let topMovies = [
-  {
-    title: "Kiki's Delivery Service",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Animation"
-  },
-  {
-    title: "Princess Mononoke",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Family"
-  },
-  {
-    title: "Ponyo",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Animation"
-  },
-  {
-    title: "Howl's Moving Castle",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Family"
-  },
-  {
-    title: "Spirited Away",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Animation"
-  },
-  {
-    title: "Castle In the Sky",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Family"
-  },
-  {
-    title: "My Neighbor Totoro",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Animation"
-  },
-  {
-    title: "Nausicaa of the Valley of the Wind",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Family"
-  },
-  {
-    title: "The Wind Rises",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Animation"
-  },
-  {
-    title: "When Marnie Was There",
-    director: {
-      name: "Studio Ghibli",
-      location: "Japan"
-    },
-    genre: "Family"
-  }
-];
-
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
-});
-
-app.get("/movies", (req, res) => {
-  res.json(topMovies);
 });
 
 app.use(express.static("public"));
 
 //Get a list of all movies
 app.get("/movies", (req, res) => {
-  res.status(200).json(topMovies);
+  myFlixDB
+    .find()
+    .then(movies => {
+      res.status(201).json(movies);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error" + err);
+    });
 });
 
 //Get data about a specific movie by title
 app.get("/movies/:title", (req, res) => {
-  res.status(200).json(
-    topMovies.find(movie => {
-      return movie.title === req.params.title;
+  myFlixDB
+    .findOne({ Title: req.params.title })
+    .then(movie => {
+      res.json(movie);
     })
-  );
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error" + err);
+    });
 });
 
 //Get data about a genre by name/title
 app.get("/genres/:genre", (req, res) => {
-  res.status(200).json(
-    topMovies.find(genre => {
-      return genre.genre === req.params.genre;
+  myFlixDB
+    .findOne({ "Genre.Name": req.params.genre })
+    .then(movie => {
+      res.json(movie.Genre);
     })
-  );
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error" + err);
+    });
 });
 
 //Get data about a director
 app.get("/directors/:directorName", (req, res) => {
-  res.status(200).json(
-    topMovies.find(director => {
-      return director.director.name === req.params.directorName;
+  myFlixDB
+    .findOne({ "Director.Name": req.params.directorName })
+    .then(movie => {
+      res.json(movie.Director);
     })
-  );
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error" + err);
+    });
 });
 
 //Add/create a new user
-app.post("/users/:newUser", (req, res) => {
-  res.send("Registration complete.");
+app.post("/users", (req, res) => {
+  Users.findOne({ Username: req.body.Username })
+    .then(user => {
+      if (user) {
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        Users.create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+          .then(user => {
+            res.status(201).json(user);
+          })
+          .catch(error => {
+            console.error(error);
+            res.status(500).send("Error: " + error);
+          });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 //Update user information
-app.put("/users/:username", (req, res) => {
-  res.send("User Profile Updated");
+app.put("/users/:Username", (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error" + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 //Disable/delete the user profile
 app.delete("/users/:deleteUser", (req, res) => {
-  res.send("Profile disabled!");
+  Users.findOneAndRemove({ userName: req.params.deleteUser })
+    .then(user => {
+      if (!user) {
+        res.status(400).send(req.params.userName + " was not found");
+      } else {
+        res.status(200).send(req.params.userName + " was deleted");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error" + err);
+    });
 });
 
 //Add new movie to list of favorite
-app.post("/favorite/:movieName", (req, res) => {
-  res.send("Added to favorites!");
+app.post("/users/:userName/movies/:title", (req, res) => {
+  Users.findOneAndUpdate(
+    { userName: req.params.userName },
+    {
+      $push: { FavoriteMovies: req.params.title }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error" + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 // Delete movie from list of favorite
-app.delete("/favorite/:deleteMovie", (req, res) => {
-  res.send("Removed from favorites.");
+app.delete("/users/:userName/movies/:title", (req, res) => {
+  Users.findOneAndUpdate(
+    { userName: req.params.userName },
+    {
+      $pull: { FavoriteMovies: req.params.title }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error" + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 //Error handler
