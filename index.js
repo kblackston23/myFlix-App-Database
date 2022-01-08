@@ -25,6 +25,10 @@ app.get("/", (req, res) => {
 
 app.use(express.static("public"));
 
+let auth = require("./auth")(app);
+const passport = require("passport");
+require("./passport");
+
 //Get a list of all movies
 app.get("/movies", (req, res) => {
   myFlixDB
