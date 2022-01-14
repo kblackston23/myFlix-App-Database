@@ -23,9 +23,13 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.1.5",
     "morgan": "^1.10.0",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "save": "^2.4.0",
     "uuid": "^8.3.2"
   }
