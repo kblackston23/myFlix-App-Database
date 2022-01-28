@@ -56,9 +56,7 @@ require("./passport");
 
 //Get a list of all movies
 app.get(
-  "/movies",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  "/movies", function (req, res) {
     myFlixDB
       .find()
       .then(movies => {
