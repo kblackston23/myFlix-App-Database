@@ -170,11 +170,15 @@ app.post(
 );
 
 //Get user info
-app.get('/users', passport.authenticate('jwt', { session: false }),
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }),
     (req, res) => {
-    Users.find()
-        .then((users) => {
-            res.json(users);
+    Users.findOne({ Username: req.params.Username })
+        .then((user) => {
+            if (user === null){
+                res.status(404).send("No user found")
+            } else {
+                res.json(user);
+            }
         })
         .catch((err) => {
             console.error(err);
