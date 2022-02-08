@@ -169,6 +169,19 @@ app.post(
   }
 );
 
+//Get user info
+app.get('/users', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+    Users.find()
+        .then((users) => {
+            res.json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+
 //Update user information
 app.put(
   "/users/:Username",
