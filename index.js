@@ -240,7 +240,7 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
-      { Username: req.params.Userame },
+      { Username: req.params.Username },
       {
         $push: { FavoriteMovies: req.params.title }
       },
