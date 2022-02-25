@@ -216,7 +216,7 @@ app.put(
 
 //Disable/delete the user profile
 app.delete(
-  "/users/:deleteUser",
+  "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.deleteUser })
