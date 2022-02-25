@@ -170,7 +170,7 @@ app.post(
 );
 
 //Get user info
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }),
+app.get("/users/:Username", passport.authenticate('jwt', { session: false }),
     (req, res) => {
     Users.findOne({ Username: req.params.Username })
         .then((user) => {
@@ -236,7 +236,7 @@ app.delete(
 
 //Add new movie to list of favorite
 app.post(
-  "/users/:userName/movies/:title",
+  "/users/:Username/movies/:title",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
@@ -259,7 +259,7 @@ app.post(
 
 // Delete movie from list of favorite
 app.delete(
-  "/users/:userName/movies/:title",
+  "/users/:Username/movies/:title",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
