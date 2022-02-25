@@ -219,12 +219,12 @@ app.delete(
   "/users/:deleteUser",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOneAndRemove({ userName: req.params.deleteUser })
+    Users.findOneAndRemove({ Username: req.params.deleteUser })
       .then(user => {
         if (!user) {
-          res.status(400).send(req.params.userName + " was not found");
+          res.status(400).send(req.params.Username + " was not found");
         } else {
-          res.status(200).send(req.params.userName + " was deleted");
+          res.status(200).send(req.params.Username + " was deleted");
         }
       })
       .catch(err => {
@@ -240,7 +240,7 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
-      { userName: req.params.userName },
+      { Username: req.params.Userame },
       {
         $push: { FavoriteMovies: req.params.title }
       },
@@ -263,7 +263,7 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
-      { userName: req.params.userName },
+      { Username: req.params.Username },
       {
         $pull: { FavoriteMovies: req.params.title }
       },
