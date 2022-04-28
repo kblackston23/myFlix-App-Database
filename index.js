@@ -21,7 +21,7 @@ mongoose.connect(process.env.CONNECTION_URI, {
 });
 
 //cors
-let allowedOrigins = ["http://localhost:8080", "http://localhost:1234"];
+let allowedOrigins = ["http://localhost:8080", "http://localhost:1234", "http://localhost:4200"];
 
 app.use(
   cors({
