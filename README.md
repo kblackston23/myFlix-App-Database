@@ -1,4 +1,4 @@
-# MOVIE API
+# Movie API
 Api for movie database, created to be used with the myFlix app
 
 ## User Stories
