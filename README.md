@@ -1,12 +1,12 @@
-#MOVIE API
+# MOVIE API
 Api for movie database, created to be used with the myFlix app
 
-##User Stories
+## User Stories
  - As a user, I want to be able to receive information on movies, directors, and genres so that I
 can learn more about movies I’ve watched or am interested in.
  - As a user, I want to be able to create a profile so I can save data about my favorite movies
 
-##Features
+## Features
  - Returns a list of ALL movies to the user
  - Returns data (description, genre, director, image URL, whether it’s featured or not) about a
 single movie by title to the user
@@ -19,7 +19,7 @@ single movie by title to the user
  - Allows existing users to deregister
 
 
-##Technologies Used
+## Technologies Used
  - Node.js
  - JavaScript
  - Express.js
